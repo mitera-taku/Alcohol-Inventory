@@ -1,0 +1,15 @@
+CREATE TABLE products (
+    id INTEGER PRIMARY KEY,
+    name VARCHAR(100),
+    price DECIMAL(10, 2)
+);
+
+CREATE TABLE inventory (
+    product_id INTEGER,
+    quantity INTEGER,
+    FOREIGN KEY (product_id) REFERENCES products (id)
+);
+
+select * from products
+
+select * from inventory
