@@ -28,9 +28,11 @@ public class InventoryRepository {
         return inventory;
     }
 
-    public Inventory save(Inventory inventory) {
+    public void save(Inventory inventory) {
         String sql = "INSERT INTO inventory (product_id, quantity) VALUES (:product_id, :quantity)";
-        return null;
+        SqlParameterSource param = new MapSqlParameterSource().addValue("product_id", inventory.getProduct_id())
+                .addValue("quantity", inventory.getQuantity());
+        quantity.update(sql, param);
     }
 
     public Inventory update(Inventory inventory) {

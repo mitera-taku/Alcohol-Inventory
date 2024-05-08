@@ -29,13 +29,13 @@ public class inventoryController {
     }
 
     @RequestMapping("/addInventory")
-    public Inventory addInventory(@RequestBody Inventory inventory) {
-        return inventoryService.addInventory(inventory);
+    public void addInventory(@RequestBody Inventory inventory) {
+        inventoryService.addInventory(inventory);
     }
 
     @RequestMapping("/updateInventory")
-    public Inventory updateInventory(@RequestBody Inventory inventory) {
-        return inventoryService.updateInventory(inventory);
+    public void updateInventory(@RequestBody Inventory inventory) {
+        inventoryService.updateInventory(inventory);
     }
 
     @RequestMapping("/deleteInventory/{id}")

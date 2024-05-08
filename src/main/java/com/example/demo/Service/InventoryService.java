@@ -14,12 +14,12 @@ public class InventoryService {
         return inventoryRepository.findById(id);
     }
 
-    public Inventory addInventory(Inventory inventory) {
-        return inventoryRepository.save(inventory);
+    public void addInventory(Inventory inventory) {
+        inventoryRepository.save(inventory);
     }
 
-    public Inventory updateInventory(Inventory inventory) {
-        return inventoryRepository.save(inventory);
+    public void updateInventory(Inventory inventory) {
+        inventoryRepository.save(inventory);
     }
 
     public Inventory deleteInventory(int id) {
