@@ -1,22 +1,23 @@
 package com.example.demo.Domain;
 
-public class inventory {
+public class Inventory {
     private int product_id;
     private int quantity;
 
-    public inventory() {
-    }
-
-    public inventory(int product_id, int quantity) {
-        this.product_id = product_id;
-        this.quantity = quantity;
-    }
-
     @Override
     public String toString() {
-        return "inventory [product_id=" + product_id + ", quantity=" + quantity + ", getProduct_id()=" + getProduct_id()
+        return "Inventory [product_id=" + product_id + ", quantity=" + quantity + ", getProduct_id()=" + getProduct_id()
                 + ", getQuantity()=" + getQuantity() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
                 + ", toString()=" + super.toString() + "]";
+    }
+
+    public Inventory(){
+        
+    }
+
+    public Inventory(int product_id, int quantity) {
+        this.product_id = product_id;
+        this.quantity = quantity;
     }
 
     public int getProduct_id() {

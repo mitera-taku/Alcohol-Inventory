@@ -1,15 +1,15 @@
 package com.example.demo.Domain;
 
-public class products {
+public class Products {
     private int id;
     private String name;
     private String price;
 
-    public products() {
+    public Products() {
 
     }
 
-    public products(int id, String name, String price) {
+    public Products(int id, String name, String price) {
         this.id = id;
         this.name = name;
         this.price = price;
