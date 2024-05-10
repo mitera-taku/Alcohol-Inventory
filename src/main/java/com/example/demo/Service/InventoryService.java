@@ -1,10 +1,12 @@
 package com.example.demo.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.Domain.Inventory;
 import com.example.demo.Repository.InventoryRepository;
 
+@Service
 public class InventoryService {
 
     @Autowired
