@@ -3,13 +3,13 @@ package com.example.demo.Domain;
 public class Products {
     private int id;
     private String name;
-    private String price;
+    private int price;
 
     public Products() {
 
     }
 
-    public Products(int id, String name, String price) {
+    public Products(int id, String name, int price) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -38,11 +38,11 @@ public class Products {
         this.name = name;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 }

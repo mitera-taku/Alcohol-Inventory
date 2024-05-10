@@ -28,8 +28,16 @@ public class InventoryService {
         inventoryRepository.save(productInventory);
     }
 
-    public Inventory deleteInventory(int id) {
-        return inventoryRepository.deleteById(id);
+    public boolean deleteInventory(int id) {
+        return inventoryRepository.deleteByProductId(id);
+    }
+    
+    public boolean checkInventory(int productId) {
+        Inventory inventory = inventoryRepository.findById(productId);
+        if (inventory != null) {
+            return inventoryRepository.deleteByProductId(productId);
+        }
+        return false; // Add this line to return false if the inventory is null
     }
 
     public List<Products> allInventory() {

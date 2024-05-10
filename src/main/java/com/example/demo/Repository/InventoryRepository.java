@@ -33,7 +33,7 @@ public class InventoryRepository {
         Products products = new Products();
         products.setId(rs.getInt("product_id"));
         products.setName(rs.getString("name"));
-        products.setPrice(rs.getString("price"));
+        products.setPrice(rs.getInt("price"));
         return products;
     };
 
@@ -44,7 +44,7 @@ public class InventoryRepository {
         Products product = new Products();
         product.setId(rs.getInt("product_id"));
         product.setName(rs.getString("name"));
-        product.setPrice(rs.getString("price"));
+        product.setPrice(rs.getInt("price"));
         productInventory.setProduct(product);
 
         // Map inventory fields
@@ -71,17 +71,24 @@ public class InventoryRepository {
     }
 
     public void save(ProductInventory productInventory) {
+        if (productInventory == null || productInventory.getProduct() == null) {
+            throw new IllegalArgumentException("ProductInventory or its Product is null");
+        }
+
         // ProductInventoryから情報を取得
         int productId = productInventory.getProduct().getId();
         int quantity = productInventory.getQuantity();
 
         // productsテーブルにデータを挿入
+        int id = productInventory.getProduct().getId();
+        String name = productInventory.getProduct().getName();
+        int price = productInventory.getProduct().getPrice();
 
         String ProductSql = "INSERT INTO products (id,name, price) VALUES (:id,:name, :price)";
         SqlParameterSource ProductParam = new MapSqlParameterSource()
-                .addValue("id", productInventory.getProduct().getId())
-                .addValue("name", productInventory.getProduct().getName())
-                .addValue("price", productInventory.getProduct().getPrice());
+                .addValue("id", id)
+                .addValue("name", name)
+                .addValue("price", price);
         jdbcTemplate.update(ProductSql, ProductParam);
 
         // inventoryテーブルにデータを挿入
@@ -89,7 +96,8 @@ public class InventoryRepository {
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("product_id", productId)
                 .addValue("quantity", quantity);
-        jdbcTemplate.update(sql, param); // jdbcTemplateを使用してデータを更新
+        // jdbcTemplateを使用してデータを更新
+        jdbcTemplate.update(sql, param);
     }
 
     public void update(Inventory inventory) {
@@ -99,11 +107,12 @@ public class InventoryRepository {
         quantity.update(sql, param);
     }
 
-    public Inventory deleteById(int id) {
-        String sql = "DELETE FROM inventory WHERE product_id = :id";
-        SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
-        Inventory inventory = quantity.queryForObject(sql, param, InventoryRowMapper);
-        return inventory;
+
+    public boolean deleteByProductId(int productId) {
+        String sql = "DELETE FROM product WHERE product_id = :productId";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("productId", productId);
+        int updatedRows = jdbcTemplate.update(sql, param);
+        return updatedRows > 0;
     }
 
     public List<Products> findAll() {

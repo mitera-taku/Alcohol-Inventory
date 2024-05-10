@@ -3,7 +3,7 @@ package com.example.demo.Domain;
 public class ProductInventory {
     private int id;
     private String name;
-    private String price;
+    private int price;
     private int product_id;
     private int quantity;
     private Products product;
@@ -19,7 +19,7 @@ public class ProductInventory {
     }
     public ProductInventory() {
     }
-    public ProductInventory(int id, String name, String price, int product_id, int quantity, Products product,
+    public ProductInventory(int id, String name, int price, int product_id, int quantity, Products product,
             Inventory inventory) {
         this.id = id;
         this.name = name;
@@ -41,10 +41,10 @@ public class ProductInventory {
     public void setName(String name) {
         this.name = name;
     }
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
     public int getProduct_id() {
