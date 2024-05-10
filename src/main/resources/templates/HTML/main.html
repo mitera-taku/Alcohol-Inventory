@@ -14,23 +14,25 @@
             <th>商品名</th>
             <th>金額</th>
             <th>在庫数</th>
+            <th>削除</th>
         </tr>
         <tr th:each="stock : ${productInventory}">
             <td th:text="${stock.product.name}"></td>
             <td th:text="${stock.product.price}"></td>
             <td th:text="${stock.inventory.quantity}"></td>
+            <td>
+                <form action="//" th:action="@{/delete}" method="post">
+                    <input type="hidden" name="productId" th:value="${stock.product.id}">
+                    <button>削除</button>
+                </form>
+            </td>
         </tr>
     </table>
-<form action="//" th:action="@{/add}">
-    <div>
-        <button>在庫追加</button>
-    </div>
-</form>
-<form action="//" th:action="@{/remove}">
-    <div>
-        <button>在庫削除</button>
-    </div>
-</form>
+    <form action="//" th:action="@{/add}">
+        <div>
+            <button>在庫追加</button>
+        </div>
+    </form>
 </body>
 
 </html>

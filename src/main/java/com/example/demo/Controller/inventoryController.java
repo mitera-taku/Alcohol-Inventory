@@ -45,7 +45,8 @@ public class inventoryController {
     }
 
     @RequestMapping("/deleteInventory/{id}")
-    public Inventory deleteInventory(@PathVariable int id) {
-        return inventoryService.deleteInventory(id);
+    public String deleteInventory(@PathVariable int id) {
+        inventoryService.deleteInventory(id);
+        return "redirect:/main"; 
     }
 }
