@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Domain.Inventory;
-import com.example.demo.Domain.ProductInventory;
-import com.example.demo.Domain.Products;
 import com.example.demo.Repository.InventoryRepository;
 
 import java.util.List;
@@ -20,33 +18,28 @@ public class InventoryService {
         return inventoryRepository.findById(id);
     }
 
-    public void addInventory(ProductInventory productInventory) {
-        inventoryRepository.save(productInventory);
-    }
+    // public void addInventory(Inventory Inventory) {
+    // inventoryRepository.save(Inventory);
+    // }
 
-    public void updateInventory(ProductInventory productInventory) {
-        inventoryRepository.save(productInventory);
-    }
+    // public void updateInventory(Inventory Inventory) {
+    // inventoryRepository.save(Inventory);
+    // }
 
     public boolean deleteInventory(int id) {
         return inventoryRepository.deleteByProductId(id);
     }
-    
-    public boolean checkInventory(int productId) {
-        Inventory inventory = inventoryRepository.findById(productId);
+
+    public boolean checkInventory(int id) {
+        Inventory inventory = inventoryRepository.findById(id);
         if (inventory != null) {
-            return inventoryRepository.deleteByProductId(productId);
+            return inventoryRepository.deleteByProductId(id);
         }
         return false; // Add this line to return false if the inventory is null
     }
 
-    public List<Products> allInventory() {
-        List<Products> inventory = inventoryRepository.findAll();
+    public List<Inventory> allInventory() {
+        List<Inventory> inventory = inventoryRepository.findAll();
         return inventory;
-    }
-
-    public List<ProductInventory> allProductsWithInventory() {
-        List<ProductInventory> productInventory = inventoryRepository.getAllProductsWithInventory();
-        return productInventory;
     }
 }

@@ -1,31 +1,17 @@
-CREATE TABLE products (
+DROP TABLE inventory;
+CREATE TABLE inventory (
     id INTEGER PRIMARY KEY,
     name VARCHAR(100),
-    price DECIMAL(10, 2)
+    price DECIMAL(10, 2),
+    quantity INTEGER
 );
-
-CREATE TABLE inventory (
-    product_id INTEGER,
-    quantity INTEGER,
-    FOREIGN KEY (product_id) REFERENCES products (id)
-);
-
-select * from products
-
+INSERT INTO inventory (id, name, price, quantity) VALUES
+(1, 'Product A', 100.00, 50),
+(2, 'Product B', 200.00, 30),
+(3, 'Product C', 150.00, 40),
+(4, 'Product D', 300.00, 20),
+(5, 'Product E', 250.00, 10);
 select *
 from inventory
     -- productsテーブルにデータを挿入
-INSERT INTO
-    products (id, name, price)
-VALUES (1, 'Product 1', 10.00),
-    (2, 'Product 2', 20.00);
 
--- inventoryテーブルにデータを挿入
-INSERT INTO
-    inventory (product_id, quantity)
-VALUES (1, 100),
-    (2, 200);
-
-SELECT *
-FROM products
-    JOIN inventory ON products.id = inventory.product_id;

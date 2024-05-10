@@ -1,4 +1,4 @@
-package com.example.demo.Domain;
+package com.example.demo.Form;
 
 public class Inventory {
     private int id;

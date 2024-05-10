@@ -16,10 +16,10 @@
             <th>在庫数</th>
             <th>削除</th>
         </tr>
-        <tr th:each="stock : ${productInventory}">
-            <td th:text="${stock.product.name}"></td>
-            <td th:text="${stock.product.price}"></td>
-            <td th:text="${stock.inventory.quantity}"></td>
+        <tr th:each="stock : ${Inventory}">
+            <td th:text="${stock.name}"></td>
+            <td th:text="${stock.price}"></td>
+            <td th:text="${stock.quantity}"></td>
             <td>
                 <form th:attr="action=@{/deleteInventory/} + ${stock.product.id}" method="post">
                     <input type="hidden" name="productId" th:value="${stock.product.id}">
