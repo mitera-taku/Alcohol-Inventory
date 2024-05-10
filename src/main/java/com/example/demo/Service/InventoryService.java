@@ -18,9 +18,9 @@ public class InventoryService {
         return inventoryRepository.findById(id);
     }
 
-    // public void addInventory(Inventory Inventory) {
-    // inventoryRepository.save(Inventory);
-    // }
+    public void addInventory(Inventory Inventory) {
+    inventoryRepository.save(Inventory);
+    }
 
     // public void updateInventory(Inventory Inventory) {
     // inventoryRepository.save(Inventory);

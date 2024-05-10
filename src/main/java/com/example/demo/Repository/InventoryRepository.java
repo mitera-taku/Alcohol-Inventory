@@ -35,44 +35,21 @@ public class InventoryRepository {
 
     // idを受け取り、そのidに対応する在庫情報を返す
     public Inventory findById(int id) {
-        String sql = "SELECT * FROM inventory WHERE product_id = :id";
+        String sql = "SELECT * FROM inventory WHERE id = :id";
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
         Inventory inventory = NamedjdbcTemplate.queryForObject(sql, param, InventoryRowMapper);
         return inventory;
     }
 
-    // public void save(Inventory Inventory) {
-    // if (Inventory == null || Inventory.getProduct() == null) {
-    // throw new IllegalArgumentException("ProductInventory or its Product is
-    // null");
-    // }
-
-    // // ProductInventoryから情報を取得
-    // int productId = productInventory.getProduct().getId();
-    // int quantity = productInventory.getQuantity();
-
-    // // productsテーブルにデータを挿入
-    // int id = productInventory.getProduct().getId();
-    // String name = productInventory.getProduct().getName();
-    // int price = productInventory.getProduct().getPrice();
-
-    // String ProductSql = "INSERT INTO products (id,name, price) VALUES (:id,:name,
-    // :price)";
-    // SqlParameterSource ProductParam = new MapSqlParameterSource()
-    // .addValue("id", id)
-    // .addValue("name", name)
-    // .addValue("price", price);
-    // jdbcTemplate.update(ProductSql, ProductParam);
-
-    // // inventoryテーブルにデータを挿入
-    // String sql = "INSERT INTO inventory (product_id, quantity) VALUES
-    // (:product_id, :quantity)";
-    // SqlParameterSource param = new MapSqlParameterSource()
-    // .addValue("product_id", productId)
-    // .addValue("quantity", quantity);
-    // // jdbcTemplateを使用してデータを更新
-    // jdbcTemplate.update(sql, param);
-    // }
+    public void save(Inventory Inventory) {
+        int id = generateNewId();
+        Inventory.setId(id);
+        String sql = "INSERT INTO inventory (id, name, price, quantity) VALUES (:id, :name, :price, :quantity)";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("id", Inventory.getId())
+                .addValue("name", Inventory.getName()).addValue("price", Inventory.getPrice())
+                .addValue("quantity", Inventory.getQuantity());
+        NamedjdbcTemplate.update(sql, param);
+    }
 
     // public void update(Inventory inventory) {
     // String sql = "UPDATE inventory SET quantity = :quantity WHERE product_id =
@@ -94,5 +71,20 @@ public class InventoryRepository {
         String sql = "SELECT * FROM inventory";
         List<Inventory> inventory = NamedjdbcTemplate.query(sql, InventoryRowMapper);
         return inventory;
+    }
+
+    public int generateNewId() {
+        String sqlCount = "SELECT COUNT(*) FROM inventory";
+        Integer countObj = jdbcTemplate.queryForObject(sqlCount, (rs, rowNum) -> rs.getInt(1));
+        int count = (countObj != null) ? countObj : 0;
+
+        String sqlCheck = "SELECT COUNT(*) FROM inventory WHERE id = ?";
+        Integer existObj;
+        while ((existObj = jdbcTemplate.queryForObject(sqlCheck, (rs, rowNum) -> rs.getInt(1), count + 1)) != null
+                && existObj > 0) {
+            count++;
+        }
+
+        return count + 1;
     }
 }

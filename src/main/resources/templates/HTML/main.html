@@ -21,8 +21,8 @@
             <td th:text="${stock.price}"></td>
             <td th:text="${stock.quantity}"></td>
             <td>
-                <form th:attr="action=@{/deleteInventory/} + ${stock.product.id}" method="post">
-                    <input type="hidden" name="productId" th:value="${stock.product.id}">
+                <form th:attr="action=@{/deleteInventory/} + ${stock.id}" method="post">
+                    <input type="hidden" name="productId" th:value="${stock.id}">
                     <button>削除</button>
                 </form>
             </td>

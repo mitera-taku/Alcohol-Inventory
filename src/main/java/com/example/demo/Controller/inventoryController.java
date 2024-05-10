@@ -37,13 +37,12 @@ public class inventoryController {
         return "HTML/add";
     }
 
-    // // 在庫情報を追加
-    // @PostMapping("/addInventory")
-    // public String addInventory(@ModelAttribute ProductInventory productInventory)
-    // {
-    // inventoryService.addInventory(productInventory);
-    // return "redirect:HTML/main";
-    // }
+    // 在庫情報を追加
+    @RequestMapping("/addInventory")
+    public String addInventory(Inventory Inventory) {
+        inventoryService.addInventory(Inventory);
+        return "redirect:/main";
+    }
 
     // @RequestMapping("/updateInventory")
     // public void updateInventory(@RequestBody ProductInventory productInventory) {
