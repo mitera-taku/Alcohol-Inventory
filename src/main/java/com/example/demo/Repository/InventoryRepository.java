@@ -9,7 +9,8 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.Domain.Inventory;
-
+// これは果たして必要なのか？
+// import java.sql.Types;
 import java.util.List;
 
 @Repository
@@ -45,8 +46,10 @@ public class InventoryRepository {
         int id = generateNewId();
         Inventory.setId(id);
         String sql = "INSERT INTO inventory (id, name, price, quantity) VALUES (:id, :name, :price, :quantity)";
-        SqlParameterSource param = new MapSqlParameterSource().addValue("id", Inventory.getId())
-                .addValue("name", Inventory.getName()).addValue("price", Inventory.getPrice())
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("id", Inventory.getId())
+                .addValue("name", Inventory.getName())
+                .addValue("price", Inventory.getPrice())
                 .addValue("quantity", Inventory.getQuantity());
         NamedjdbcTemplate.update(sql, param);
     }
@@ -60,9 +63,9 @@ public class InventoryRepository {
     // quantity.update(sql, param);
     // }
 
-    public boolean deleteByProductId(int productId) {
-        String sql = "DELETE FROM products WHERE product_id = :id";
-        SqlParameterSource param = new MapSqlParameterSource().addValue("productId", productId);
+    public boolean deleteById(int id) {
+        String sql = "DELETE FROM inventory WHERE id = :id";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
         int updatedRows = jdbcTemplate.update(sql, param);
         return updatedRows > 0;
     }
@@ -73,6 +76,7 @@ public class InventoryRepository {
         return inventory;
     }
 
+    // 新しいidを生成
     public int generateNewId() {
         String sqlCount = "SELECT COUNT(*) FROM inventory";
         Integer countObj = jdbcTemplate.queryForObject(sqlCount, (rs, rowNum) -> rs.getInt(1));
