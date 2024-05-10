@@ -4,7 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Domain.Inventory;
+import com.example.demo.Domain.ProductInventory;
+import com.example.demo.Domain.Products;
 import com.example.demo.Repository.InventoryRepository;
+
+import java.util.List;
 
 @Service
 public class InventoryService {
@@ -26,5 +30,15 @@ public class InventoryService {
 
     public Inventory deleteInventory(int id) {
         return inventoryRepository.deleteById(id);
+    }
+
+    public List<Products> allInventory() {
+        List<Products> inventory = inventoryRepository.findAll();
+        return inventory;
+    }
+
+    public List<ProductInventory> allProductsWithInventory() {
+        List<ProductInventory> productInventory = inventoryRepository.getAllProductsWithInventory();
+        return productInventory;
     }
 }
