@@ -39,23 +39,23 @@ public class InventoryRepository {
 
     private static final RowMapper<ProductInventory> ProductInventoryRowMapper = (rs, i) -> {
         ProductInventory productInventory = new ProductInventory();
-    
+
         // Map product fields
         Products product = new Products();
         product.setId(rs.getInt("product_id"));
         product.setName(rs.getString("name"));
         product.setPrice(rs.getString("price"));
         productInventory.setProduct(product);
-    
+
         // Map inventory fields
         Inventory inventory = new Inventory();
         inventory.setProduct_id(rs.getInt("product_id"));
         inventory.setQuantity(rs.getInt("quantity"));
         productInventory.setInventory(inventory);
-    
+
         return productInventory;
     };
-    
+
     public List<ProductInventory> getAllProductsWithInventory() {
         String sql = "SELECT * FROM products INNER JOIN inventory ON products.id = inventory.product_id";
         List<ProductInventory> ProductInventoryList = jdbcTemplate.query(sql, ProductInventoryRowMapper);
@@ -70,11 +70,26 @@ public class InventoryRepository {
         return inventory;
     }
 
-    public void save(Inventory inventory) {
+    public void save(ProductInventory productInventory) {
+        // ProductInventoryから情報を取得
+        int productId = productInventory.getProduct().getId();
+        int quantity = productInventory.getQuantity();
+
+        // productsテーブルにデータを挿入
+
+        String ProductSql = "INSERT INTO products (id,name, price) VALUES (:id,:name, :price)";
+        SqlParameterSource ProductParam = new MapSqlParameterSource()
+                .addValue("id", productInventory.getProduct().getId())
+                .addValue("name", productInventory.getProduct().getName())
+                .addValue("price", productInventory.getProduct().getPrice());
+        jdbcTemplate.update(ProductSql, ProductParam);
+
+        // inventoryテーブルにデータを挿入
         String sql = "INSERT INTO inventory (product_id, quantity) VALUES (:product_id, :quantity)";
-        SqlParameterSource param = new MapSqlParameterSource().addValue("product_id", inventory.getProduct_id())
-                .addValue("quantity", inventory.getQuantity());
-        quantity.update(sql, param);
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("product_id", productId)
+                .addValue("quantity", quantity);
+        jdbcTemplate.update(sql, param); // jdbcTemplateを使用してデータを更新
     }
 
     public void update(Inventory inventory) {

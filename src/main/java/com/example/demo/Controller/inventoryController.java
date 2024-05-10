@@ -9,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
@@ -34,19 +36,26 @@ public class inventoryController {
         return inventoryService.getInventory(id);
     }
 
-    @RequestMapping("/addInventory")
-    public void addInventory(@RequestBody Inventory inventory) {
-        inventoryService.addInventory(inventory);
+    @RequestMapping("add")
+    public String add() {
+        return "HTML/add";
+    }
+
+    // 在庫情報を追加
+    @PostMapping("/addInventory")
+    public String addInventory(@ModelAttribute ProductInventory productInventory) {
+        inventoryService.addInventory(productInventory);
+        return "redirect:HTML/main";
     }
 
     @RequestMapping("/updateInventory")
-    public void updateInventory(@RequestBody Inventory inventory) {
-        inventoryService.updateInventory(inventory);
+    public void updateInventory(@RequestBody ProductInventory productInventory) {
+        inventoryService.updateInventory(productInventory);
     }
 
     @RequestMapping("/deleteInventory/{id}")
     public String deleteInventory(@PathVariable int id) {
         inventoryService.deleteInventory(id);
-        return "redirect:/main"; 
+        return "redirect:HTML/main";
     }
 }

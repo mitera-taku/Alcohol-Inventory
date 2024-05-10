@@ -20,12 +20,12 @@ public class InventoryService {
         return inventoryRepository.findById(id);
     }
 
-    public void addInventory(Inventory inventory) {
-        inventoryRepository.save(inventory);
+    public void addInventory(ProductInventory productInventory) {
+        inventoryRepository.save(productInventory);
     }
 
-    public void updateInventory(Inventory inventory) {
-        inventoryRepository.save(inventory);
+    public void updateInventory(ProductInventory productInventory) {
+        inventoryRepository.save(productInventory);
     }
 
     public Inventory deleteInventory(int id) {
