@@ -54,19 +54,25 @@ public class InventoryRepository {
         NamedjdbcTemplate.update(sql, param);
     }
 
-    // public void update(Inventory inventory) {
-    // String sql = "UPDATE inventory SET quantity = :quantity WHERE product_id =
-    // :product_id";
-    // SqlParameterSource param = new MapSqlParameterSource().addValue("product_id",
-    // inventory.getProduct_id())
-    // .addValue("quantity", inventory.getQuantity());
-    // quantity.update(sql, param);
-    // }
+    public void update(Inventory inventory) {
+        String sql = """
+            UPDATE
+             inventory
+              SET
+               quantity = :quantity
+                WHERE
+                product_id = :product_id
+            """;
+        SqlParameterSource param = new MapSqlParameterSource()
+            .addValue("id", inventory.getId())
+            .addValue("quantity", inventory.getQuantity());
+            NamedjdbcTemplate.update(sql, param);
+    }
 
     public boolean deleteById(int id) {
         String sql = "DELETE FROM inventory WHERE id = :id";
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
-        int updatedRows = jdbcTemplate.update(sql, param);
+        int updatedRows = NamedjdbcTemplate.update(sql, param);
         return updatedRows > 0;
     }
 

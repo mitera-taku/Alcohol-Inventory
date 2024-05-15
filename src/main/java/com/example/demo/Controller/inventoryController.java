@@ -44,14 +44,21 @@ public class inventoryController {
         return "redirect:/main";
     }
 
-    // @RequestMapping("/updateInventory")
-    // public void updateInventory(@RequestBody ProductInventory productInventory) {
-    // inventoryService.updateInventory(productInventory);
-    // }
+    @RequestMapping("/editInventory/{id}")
+    public String editInventory(@PathVariable("id") int id, Model model) {
+        Inventory Inventory = inventoryService.getInventory(id);
+        model.addAttribute("Inventory", Inventory);
+        return "HTML/update";
+    }
+
+    @RequestMapping("/updateInventory")
+    public void updateInventory(Inventory Inventory) {
+        inventoryService.updateInventory(Inventory);
+    }
 
     @RequestMapping("/deleteInventory/{id}")
     public String deleteInventory(@PathVariable int id) {
         inventoryService.checkInventory(id);
-        return "redirect:HTML/main";
+        return "redirect:/main";
     }
 }

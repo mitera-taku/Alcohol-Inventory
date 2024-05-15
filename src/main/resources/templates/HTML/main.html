@@ -8,7 +8,9 @@
 </head>
 
 <body>
-    <div><h1>在庫管理システム</h1></div>
+    <div>
+        <h1>在庫管理システム</h1>
+    </div>
     <table>
         <tr>
             <th>商品名</th>
@@ -24,6 +26,12 @@
                 <form th:attr="action=@{/deleteInventory/} + ${stock.id}" method="post">
                     <input type="hidden" name="id" th:value="${stock.id}">
                     <button>削除</button>
+                </form>
+            </td>
+            <td>
+                <form th:attr="action=@{/editInventory/} + ${stock.id}" method="post">
+                    <input type="hidden" name="id" th:value="${stock.id}">
+                    <button>編集</button>
                 </form>
             </td>
         </tr>
