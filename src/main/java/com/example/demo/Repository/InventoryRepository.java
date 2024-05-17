@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.Domain.Inventory;
+import com.example.demo.Domain.inventory;
 import java.util.List;
 
 @Repository
@@ -23,8 +23,8 @@ public class InventoryRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private static final RowMapper<Inventory> InventoryRowMapper = (rs, i) -> {
-        Inventory inventory = new Inventory();
+    private static final RowMapper<inventory> InventoryRowMapper = (rs, i) -> {
+        inventory inventory = new inventory();
         inventory.setId(rs.getInt("id"));
         inventory.setName(rs.getString("name"));
         inventory.setPrice(rs.getInt("price"));
@@ -33,14 +33,14 @@ public class InventoryRepository {
     };
 
     // idを受け取り、そのidに対応する在庫情報を返す
-    public Inventory findById(int id) {
+    public inventory findById(int id) {
         String sql = "SELECT * FROM inventory WHERE id = :id";
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
-        Inventory inventory = NamedjdbcTemplate.queryForObject(sql, param, InventoryRowMapper);
+        inventory inventory = NamedjdbcTemplate.queryForObject(sql, param, InventoryRowMapper);
         return inventory;
     }
 
-    public void save(Inventory Inventory) {
+    public void save(inventory Inventory) {
         int id = generateNewId();
         Inventory.setId(id);
         String sql = "INSERT INTO inventory (id, name, price, quantity) VALUES (:id, :name, :price, :quantity)";
@@ -52,7 +52,7 @@ public class InventoryRepository {
         NamedjdbcTemplate.update(sql, param);
     }
 
-    public void update(Inventory inventory) {
+    public void update(inventory inventory) {
         String sql = """
                 UPDATE
                 inventory
@@ -78,9 +78,9 @@ public class InventoryRepository {
         return updatedRows > 0;
     }
 
-    public List<Inventory> findAll() {
+    public List<inventory> findAll() {
         String sql = "SELECT * FROM inventory ORDER BY price ASC";
-        List<Inventory> inventory = NamedjdbcTemplate.query(sql, InventoryRowMapper);
+        List<inventory> inventory = NamedjdbcTemplate.query(sql, InventoryRowMapper);
         return inventory;
     }
 
