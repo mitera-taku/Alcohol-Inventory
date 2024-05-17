@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在庫追加</title>
+</head>
+<body>
+    <h1>在庫追加</h1>
+    <form action="/" th:action="@{/addInventory}" method="post">
+        <div>
+            <label for="productName">商品名</label>
+            <input type="text" id="productName" name="name">
+        </div>
+        <div>
+            <label for="productPrice">金額</label>
+            <input type="number" id="productPrice" name="price">
+        </div>
+        <div>
+            <label for="productQuantity">在庫数</label>
+            <input type="number" id="productQuantity" name="quantity">
+        </div>
+        <div>
+            <button>追加</button>
+        </div>
+    </form>
+    
+</body>
+</html>
