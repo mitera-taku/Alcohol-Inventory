@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
@@ -45,15 +46,16 @@ public class inventoryController {
     }
 
     @RequestMapping("/editInventory/{id}")
-    public String editInventory(@PathVariable("id") int id, Model model) {
-        Inventory Inventory = inventoryService.getInventory(id);
-        model.addAttribute("Inventory", Inventory);
+    public String editInventory(int id, Model model) {
+        Inventory inventory = inventoryService.getInventory(id);
+        model.addAttribute("inventory", inventory);
         return "HTML/update";
     }
 
     @RequestMapping("/updateInventory")
-    public void updateInventory(Inventory Inventory) {
+    public String updateInventory(Inventory Inventory) {
         inventoryService.updateInventory(Inventory);
+        return "redirect:/main";
     }
 
     @RequestMapping("/deleteInventory/{id}")

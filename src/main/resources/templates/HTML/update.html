@@ -6,7 +6,7 @@
     <title>編集画面</title>
 </head>
 <body>
-    <form action="#" th:action="@{/inventory/update}" th:object="${inventory}" method="post">
+    <form action="#" th:action="@{/updateInventory}" th:object="${inventory}" method="post">
         <input type="hidden" th:field="*{id}">
         <table>
             <tr>

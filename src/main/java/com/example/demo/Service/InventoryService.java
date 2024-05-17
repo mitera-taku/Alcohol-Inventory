@@ -23,7 +23,7 @@ public class InventoryService {
     }
 
     public void updateInventory(Inventory Inventory) {
-    inventoryRepository.save(Inventory);
+    inventoryRepository.update(Inventory);
     }
 
     public boolean deleteInventory(int id) {

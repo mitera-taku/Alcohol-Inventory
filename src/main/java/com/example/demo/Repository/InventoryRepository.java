@@ -9,8 +9,6 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.Domain.Inventory;
-// これは果たして必要なのか？
-// import java.sql.Types;
 import java.util.List;
 
 @Repository
@@ -56,17 +54,21 @@ public class InventoryRepository {
 
     public void update(Inventory inventory) {
         String sql = """
-            UPDATE
-             inventory
-              SET
-               quantity = :quantity
+                UPDATE
+                inventory
+                SET
+                name= :name,
+                price= :price,
+                quantity= :quantity
                 WHERE
-                product_id = :product_id
-            """;
+                id= :id
+                """;
         SqlParameterSource param = new MapSqlParameterSource()
-            .addValue("id", inventory.getId())
-            .addValue("quantity", inventory.getQuantity());
-            NamedjdbcTemplate.update(sql, param);
+                .addValue("id", inventory.getId())
+                .addValue("name", inventory.getName())
+                .addValue("price", inventory.getPrice())
+                .addValue("quantity", inventory.getQuantity());
+        NamedjdbcTemplate.update(sql, param);
     }
 
     public boolean deleteById(int id) {
@@ -77,7 +79,7 @@ public class InventoryRepository {
     }
 
     public List<Inventory> findAll() {
-        String sql = "SELECT * FROM inventory";
+        String sql = "SELECT * FROM inventory ORDER BY price ASC";
         List<Inventory> inventory = NamedjdbcTemplate.query(sql, InventoryRowMapper);
         return inventory;
     }
