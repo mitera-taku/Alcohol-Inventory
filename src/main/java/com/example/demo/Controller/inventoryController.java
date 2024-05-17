@@ -1,6 +1,6 @@
 package com.example.demo.Controller;
 
-import com.example.demo.Domain.Inventory;
+import com.example.demo.Domain.inventory;
 import com.example.demo.Service.InventoryService;
 
 import org.springframework.ui.Model;
@@ -22,14 +22,14 @@ public class inventoryController {
     // 在庫情報を表示するページに遷移
     @RequestMapping("/main")
     public String inventory(Model model) {
-        List<Inventory> Inventory = inventoryService.allInventory();
+        List<inventory> Inventory = inventoryService.allInventory();
         model.addAttribute("Inventory", Inventory);
         return "HTML/main";
     }
 
     // idを受け取り、そのidに対応する在庫情報を返す
     @GetMapping("/inventory/{id}")
-    public Inventory getInventory(@PathVariable int id) {
+    public inventory getInventory(@PathVariable int id) {
         return inventoryService.getInventory(id);
     }
 
@@ -40,20 +40,20 @@ public class inventoryController {
 
     // 在庫情報を追加
     @RequestMapping("/addInventory")
-    public String addInventory(Inventory Inventory) {
+    public String addInventory(inventory Inventory) {
         inventoryService.addInventory(Inventory);
         return "redirect:/main";
     }
 
     @RequestMapping("/editInventory/{id}")
     public String editInventory(int id, Model model) {
-        Inventory inventory = inventoryService.getInventory(id);
+        inventory inventory = inventoryService.getInventory(id);
         model.addAttribute("inventory", inventory);
         return "HTML/update";
     }
 
     @RequestMapping("/updateInventory")
-    public String updateInventory(Inventory Inventory) {
+    public String updateInventory(inventory Inventory) {
         inventoryService.updateInventory(Inventory);
         return "redirect:/main";
     }
