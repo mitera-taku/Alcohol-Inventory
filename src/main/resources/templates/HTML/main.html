@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>在庫管理システム</title>
+    <title>在庫管理システム</title>   
+    <link th:href="@{/CSS/main.css}" rel="stylesheet" />
 </head>
 
 <body>
@@ -17,6 +18,7 @@
             <th>金額</th>
             <th>在庫数</th>
             <th>削除</th>
+            <th>編集</th>
         </tr>
         <tr th:each="stock : ${Inventory}">
             <td th:text="${stock.name}"></td>
@@ -42,5 +44,9 @@
         </div>
     </form>
 </body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- <script th:src="@{/JS/main.js}"></script> -->
+
 
 </html>
