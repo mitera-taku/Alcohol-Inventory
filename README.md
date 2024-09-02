@@ -10,4 +10,5 @@
 ![商品追加画面](https://github.com/user-attachments/assets/fedcb0ba-bfe8-4b2a-ab8a-99dfe4381d71)
 
 ***4.アーキテクチャ図***
+
 ![在庫管理システム　アーキテクチャ図](https://github.com/user-attachments/assets/be7d1c2c-1411-4925-80bf-5c9de8f81fbd)
