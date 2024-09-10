@@ -27,6 +27,11 @@ public class UserController {
         return "HTML/user"; 
     }
 
+    @GetMapping("/login")
+    public String login(){
+        return  "HTML/login"; 
+    }
+
        // ユーザーを登録
        @PostMapping("/register")
        public String registerUser(@ModelAttribute User user) {
