@@ -1,17 +1,28 @@
 DROP TABLE inventory;
+
 CREATE TABLE inventory (
     id INTEGER PRIMARY KEY,
     name VARCHAR(100),
     price DECIMAL(10, 2),
     quantity INTEGER
 );
-INSERT INTO inventory (id, name, price, quantity) VALUES
-(1, 'Product A', 100.00, 50),
-(2, 'Product B', 200.00, 30),
-(3, 'Product C', 150.00, 40),
-(4, 'Product D', 300.00, 20),
-(5, 'Product E', 250.00, 10);
+
+INSERT INTO
+    inventory (id, name, price, quantity)
+VALUES (1, 'Product A', 100.00, 50),
+    (2, 'Product B', 200.00, 30),
+    (3, 'Product C', 150.00, 40),
+    (4, 'Product D', 300.00, 20),
+    (5, 'Product E', 250.00, 10);
+
 select *
 from inventory
     -- productsテーブルにデータを挿入
 
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY, -- ユーザーID (自動増分の主キー)
+    username VARCHAR(50) NOT NULL, -- ユーザー名
+    email VARCHAR(100) NOT NULL UNIQUE, -- メールアドレス (一意)
+    password VARCHAR(255) NOT NULL, -- パスワード (暗号化を想定して長めに設定)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- ユーザー登録日時
+);
