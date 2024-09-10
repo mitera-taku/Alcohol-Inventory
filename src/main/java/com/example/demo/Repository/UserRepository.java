@@ -1,7 +1,7 @@
 package com.example.demo.Repository;
 
 import com.example.demo.Domain.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -13,10 +13,13 @@ import java.util.Map;
 @Repository
 public class UserRepository {
 
-    @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    // RowMapperを使用してResultSetからUserオブジェクトにマッピング
+    // コンストラクタ
+    public UserRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
+
     private static final RowMapper<User> userRowMapper = (rs, rowNum) -> {
         User user = new User();
         user.setId(rs.getInt("id"));
@@ -26,25 +29,24 @@ public class UserRepository {
         return user;
     };
 
-    // ユーザーを登録するメソッド
     public void saveUser(User user) {
         String sql = "INSERT INTO users (username, email, password) VALUES (:username, :email, :password)";
-
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("username", user.getUsername());
-        params.addValue("email", user.getEmail());
-        params.addValue("password", user.getPassword());
-
+        // パスワードのハッシュ化はリポジトリ外で処理するように変更
+        MapSqlParameterSource params = new MapSqlParameterSource()
+            .addValue("username", user.getUsername())
+            .addValue("email", user.getEmail())
+            .addValue("password", user.getPassword());
         namedParameterJdbcTemplate.update(sql, params);
     }
 
-    // ユーザーをIDで取得するメソッド
     public User getUserById(int id) {
         String sql = "SELECT * FROM users WHERE id = :id";
-
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
-
-        return namedParameterJdbcTemplate.queryForObject(sql, params, userRowMapper);
+        try {
+            return namedParameterJdbcTemplate.queryForObject(sql, params, userRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            return null; // ユーザーが見つからない場合はnullを返す
+        }
     }
 }

@@ -10,7 +10,15 @@
 
 <body>
     <div>
-        <h1>在庫管理システム</h1>
+        <div>
+            <h1>在庫管理システム</h1>
+            <h2 th:if="${username != null}">ようこそ、<span th:text="${username}"></span>さん</h2>
+        </div>
+        <h2>
+        <div class="back-link">
+            <!-- <a href="/user">ユーザー登録</a> -->
+        </div>
+        </h2>
     </div>
     <table>
         <tr>

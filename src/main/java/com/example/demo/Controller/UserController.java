@@ -4,23 +4,45 @@ import com.example.demo.Domain.User;
 
 import com.example.demo.Service.UserService;
 
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @PostMapping("/register")
-    public void registerUser(@RequestBody User user) {
-        userService.saveUser(user);
+    // @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
+
+    @GetMapping("/log")
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user", new User());
+        return "HTML/user"; 
+    }
+
+       // ユーザーを登録
+       @PostMapping("/register")
+       public String registerUser(@ModelAttribute User user) {
+           userService.saveUser(user);
+           return "redirect:/main";
+       }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable int id) {
-        return userService.getUserById(id);
+    @ResponseBody
+    public ResponseEntity<User> getUserById(@PathVariable int id) {
+        User user = userService.getUserById(id);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user);
     }
+    
 }
+
