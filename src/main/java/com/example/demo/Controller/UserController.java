@@ -24,20 +24,20 @@ public class UserController {
     @GetMapping("/log")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
-        return "HTML/user"; 
+        return "HTML/user";
     }
 
     @GetMapping("/login")
-    public String login(){
-        return  "HTML/login"; 
+    public String login() {
+        return "HTML/login";
     }
 
-       // ユーザーを登録
-       @PostMapping("/register")
-       public String registerUser(@ModelAttribute User user) {
-           userService.saveUser(user);
-           return "redirect:/main";
-       }
+    // ユーザーを登録
+    @PostMapping("/register")
+    public String registerUser(@ModelAttribute User user) {
+        userService.saveUser(user);
+        return "redirect:/main";
+    }
 
     @GetMapping("/{id}")
     @ResponseBody
@@ -48,6 +48,5 @@ public class UserController {
         }
         return ResponseEntity.ok(user);
     }
-    
-}
 
+}
