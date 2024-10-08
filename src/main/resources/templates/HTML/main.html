@@ -41,13 +41,15 @@
         <p th:text="${message}"></p>
     </div>
     </h2>
+    <h2>商品一覧</h2>
+    <p>列ヘッダーをクリックすると、その列を基準に昇順・降順で並び替えできます。</p> 
 
     <table id="productTable">
         <thead>
             <tr>
-                <th onclick="sortTable(0)">商品名</th>
-                <th onclick="sortTable(1, true)">金額</th>
-                <th onclick="sortTable(2, true)">在庫数</th>
+                <th class="sortable" onclick="sortTable(0)">商品名</th>
+                <th class="sortable" onclick="sortTable(1, true)">金額</th>
+                <th class="sortable" onclick="sortTable(2, true)">在庫数</th>
                 <th>削除</th>
                 <th>編集</th>
             </tr>
