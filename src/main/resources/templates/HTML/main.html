@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>在庫管理システム</title>   
+    <title>在庫管理システム</title>
     <link th:href="@{/CSS/main.css}" rel="stylesheet" />
 </head>
 
@@ -14,12 +14,25 @@
             <h1>在庫管理システム</h1>
             <h2 th:if="${username != null}">ようこそ、<span th:text="${username}"></span>さん</h2>
         </div>
+
+        <!-- 商品検索フォームの追加 -->
+        <div>
+            <form th:action="@{/search}" method="get">
+                <input type="text" name="name" placeholder="商品名で検索">
+                <button type="submit">検索</button>
+            </form>
+            <form th:action="@{/main}" method="post">
+                <button type="submit">検索結果リセット</button>
+            </form>
+        </div>
+
         <h2>
         <div class="back-link">
             <a href="/users/log">ユーザー登録</a>
         </div>
         </h2>
     </div>
+
     <table>
         <tr>
             <th>商品名</th>
@@ -28,6 +41,8 @@
             <th>削除</th>
             <th>編集</th>
         </tr>
+
+        <!-- 検索結果または全商品の表示 -->
         <tr th:each="stock : ${Inventory}">
             <td th:text="${stock.name}"></td>
             <td th:text="${stock.price}"></td>
@@ -46,6 +61,7 @@
             </td>
         </tr>
     </table>
+
     <form action="//" th:action="@{/add}">
         <div>
             <button>在庫追加</button>
@@ -55,6 +71,5 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- <script th:src="@{/JS/main.js}"></script> -->
-
 
 </html>

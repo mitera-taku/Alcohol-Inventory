@@ -9,6 +9,11 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.Domain.inventory;
+import com.example.demo.Form.Inventory;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+
 import java.util.List;
 
 @Repository
@@ -19,12 +24,15 @@ public class InventoryRepository {
 
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private EntityManager entityManager;
+
     public InventoryRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private static final RowMapper<inventory> InventoryRowMapper = (rs, i) -> {
-        inventory inventory = new inventory();
+    private static final RowMapper<Inventory> InventoryRowMapper = (rs, i) -> {
+        Inventory inventory = new Inventory();
         inventory.setId(rs.getInt("id"));
         inventory.setName(rs.getString("name"));
         inventory.setPrice(rs.getInt("price"));
@@ -33,10 +41,10 @@ public class InventoryRepository {
     };
 
     // idを受け取り、そのidに対応する在庫情報を返す
-    public inventory findById(int id) {
+    public Inventory findById(int id) {
         String sql = "SELECT * FROM inventory WHERE id = :id";
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
-        inventory inventory = NamedjdbcTemplate.queryForObject(sql, param, InventoryRowMapper);
+        Inventory inventory = NamedjdbcTemplate.queryForObject(sql, param, InventoryRowMapper);
         return inventory;
     }
 
@@ -78,9 +86,9 @@ public class InventoryRepository {
         return updatedRows > 0;
     }
 
-    public List<inventory> findAll() {
+    public List<Inventory> findAll() {
         String sql = "SELECT * FROM inventory ORDER BY quantity ASC, price ASC";
-        List<inventory> inventory = NamedjdbcTemplate.query(sql, InventoryRowMapper);
+        List<Inventory> inventory = NamedjdbcTemplate.query(sql, InventoryRowMapper);
         return inventory;
     }
 
@@ -99,4 +107,15 @@ public class InventoryRepository {
 
         return count + 1;
     }
+
+    // 商品名で部分一致検索
+    public List<Inventory> findByNameContaining(String name) {
+        // JPQLクエリをエンティティ名で実行
+        String queryStr = "SELECT i FROM inventory i WHERE i.name LIKE :name";
+        TypedQuery<Inventory> query = entityManager.createQuery(queryStr, Inventory.class);
+        // 部分一致検索用
+        query.setParameter("name", "%" + name + "%");  
+        return query.getResultList();
+    }
+        
 }
