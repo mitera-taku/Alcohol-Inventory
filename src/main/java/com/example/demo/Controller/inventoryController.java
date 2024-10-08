@@ -79,7 +79,12 @@ public class inventoryController {
                 products = inventoryService.searchProductsByName(name);
             }
 
+               // 検索結果が空の場合にメッセージを設定
+        if (products.isEmpty()) {
+            model.addAttribute("message", "商品が見当たりません");
+        } else {
             model.addAttribute("Inventory", products);
+        }
             // 結果を表示するテンプレートを返す（"main.html"）
             return "HTML/main";  // 正しいHTMLテンプレート名に合わせて修正
         } catch (Exception e) {

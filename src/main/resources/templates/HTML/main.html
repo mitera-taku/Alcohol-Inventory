@@ -33,6 +33,12 @@
         </h2>
     </div>
 
+    <h2>
+    <div th:if="${message}">
+        <p th:text="${message}"></p>
+    </div>
+    </h2>
+
     <table>
         <tr>
             <th>商品名</th>
