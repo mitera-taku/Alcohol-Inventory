@@ -87,7 +87,7 @@ public class InventoryRepository {
     }
 
     public List<Inventory> findAll() {
-        String sql = "SELECT * FROM inventory ORDER BY quantity ASC, price ASC";
+        String sql = "SELECT * FROM inventory ORDER BY id";
         List<Inventory> inventory = NamedjdbcTemplate.query(sql, InventoryRowMapper);
         return inventory;
     }

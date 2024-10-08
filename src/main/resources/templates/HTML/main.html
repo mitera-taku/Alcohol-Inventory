@@ -24,6 +24,9 @@
             <form th:action="@{/main}" method="post">
                 <button type="submit">検索結果リセット</button>
             </form>
+            <form th:action="@{/download}" method="get">
+                <button type="submit">CSVダウンロード</button>
+            </form>
         </div>
 
         <h2>
@@ -39,34 +42,37 @@
     </div>
     </h2>
 
-    <table>
-        <tr>
-            <th>商品名</th>
-            <th>金額</th>
-            <th>在庫数</th>
-            <th>削除</th>
-            <th>編集</th>
-        </tr>
-
-        <!-- 検索結果または全商品の表示 -->
-        <tr th:each="stock : ${Inventory}">
-            <td th:text="${stock.name}"></td>
-            <td th:text="${stock.price}"></td>
-            <td th:text="${stock.quantity}"></td>
-            <td>
-                <form th:attr="action=@{/deleteInventory/} + ${stock.id}" method="post">
-                    <input type="hidden" name="id" th:value="${stock.id}">
-                    <button>削除</button>
-                </form>
-            </td>
-            <td>
-                <form th:attr="action=@{/editInventory/} + ${stock.id}" method="post">
-                    <input type="hidden" name="id" th:value="${stock.id}">
-                    <button>編集</button>
-                </form>
-            </td>
-        </tr>
+    <table id="productTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">商品名</th>
+                <th onclick="sortTable(1, true)">金額</th>
+                <th onclick="sortTable(2, true)">在庫数</th>
+                <th>削除</th>
+                <th>編集</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="stock : ${Inventory}">
+                <td th:text="${stock.name}"></td>
+                <td th:text="${stock.price}"></td>
+                <td th:text="${stock.quantity}"></td>
+                <td>
+                    <form th:attr="action=@{/deleteInventory/} + ${stock.id}" method="post">
+                        <input type="hidden" name="id" th:value="${stock.id}">
+                        <button>削除</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:attr="action=@{/editInventory/} + ${stock.id}" method="post">
+                        <input type="hidden" name="id" th:value="${stock.id}">
+                        <button>編集</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
     </table>
+    
 
     <form action="//" th:action="@{/add}">
         <div>
@@ -76,6 +82,6 @@
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<!-- <script th:src="@{/JS/main.js}"></script> -->
+<script th:src="@{/JS/main.js}"></script>
 
 </html>

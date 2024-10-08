@@ -4,6 +4,9 @@ import com.example.demo.Domain.inventory;
 import com.example.demo.Form.Inventory;
 import com.example.demo.Service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -93,5 +100,25 @@ public class inventoryController {
             return "HTML/error";  // エラーページへの遷移
         }
     }
+
+    @GetMapping("download")
+public ResponseEntity<byte[]> downloadInventoryCSV() throws IOException {
+    // ファイルにCSVを書き出し
+    String filePath = System.getProperty("java.io.tmpdir") + "inventory.csv";
+    inventoryService.exportInventoryToCSV(filePath);
+    
+    // ファイルをバイト配列に読み込み
+    byte[] csvData = Files.readAllBytes(Paths.get(filePath));
+    
+    // HTTPヘッダー設定
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+    headers.setContentDispositionFormData("attachment", "inventory.csv");
+
+    // レスポンスとして返す
+    return ResponseEntity.ok()
+            .headers(headers)
+            .body(csvData);
+}
 
 }
