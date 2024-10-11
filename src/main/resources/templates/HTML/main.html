@@ -30,19 +30,19 @@
         </div>
 
         <h2>
-        <div class="back-link">
-            <a href="/users/log">ユーザー登録</a>
-        </div>
+            <div class="back-link">
+                <a href="/users/log">ユーザー登録</a>
+            </div>
         </h2>
     </div>
 
     <h2>
-    <div th:if="${message}">
-        <p th:text="${message}"></p>
-    </div>
+        <div th:if="${message}">
+            <p th:text="${message}"></p>
+        </div>
     </h2>
     <h2>商品一覧</h2>
-    <p>列ヘッダーをクリックすると、その列を基準に昇順・降順で並び替えできます。</p> 
+    <p>列ヘッダーをクリックすると、その列を基準に昇順・降順で並び替えできます。</p>
 
     <table id="productTable">
         <thead>
@@ -74,7 +74,7 @@
             </tr>
         </tbody>
     </table>
-    
+
 
     <form action="//" th:action="@{/add}">
         <div>

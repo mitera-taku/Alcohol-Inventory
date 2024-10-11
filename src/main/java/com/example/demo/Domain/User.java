@@ -5,6 +5,16 @@ public class User {
     String username;
     String email;
     String password;
+    
+    public User(int id, String username, String email, String password) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+    public User() {
+        // 必要に応じて初期化コードを追加
+    }
     public int getId() {
         return id;
     }
