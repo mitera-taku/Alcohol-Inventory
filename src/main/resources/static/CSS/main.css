@@ -60,3 +60,16 @@ button:active {
     background-color: #004085;
     transform: translateY(0);
 }
+
+th.sortable {
+    cursor: pointer;
+    background-color: greenyellow;
+}
+
+th.sortable.asc::after {
+    content: " ▲";  /* 昇順 */
+}
+
+th.sortable.desc::after {
+    content: " ▼";  /* 降順 */
+}
