@@ -31,9 +31,8 @@ class InventoryServiceTest {
     @Test
     void testGetAllInventory() {
         List<Inventory> mockInventory = Arrays.asList(
-            new Inventory(1, "Product A", 10, 100),
-            new Inventory(2, "Product B", 20, 200)
-        );
+                new Inventory(1, "Product A", 10, 100),
+                new Inventory(2, "Product B", 20, 200));
 
         when(inventoryRepository.findAll()).thenReturn(mockInventory);
 
