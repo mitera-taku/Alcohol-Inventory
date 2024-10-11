@@ -114,8 +114,8 @@ public class InventoryRepository {
         String queryStr = "SELECT i FROM inventory i WHERE i.name LIKE :name";
         TypedQuery<Inventory> query = entityManager.createQuery(queryStr, Inventory.class);
         // 部分一致検索用
-        query.setParameter("name", "%" + name + "%");  
+        query.setParameter("name", "%" + name + "%");
         return query.getResultList();
     }
-        
+
 }

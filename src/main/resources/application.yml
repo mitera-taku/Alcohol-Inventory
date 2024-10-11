@@ -3,3 +3,16 @@ spring:
         url: jdbc:postgresql://localhost:5432/inventory
         username: postgres
         password: postgres
+
+#         spring:
+#   datasource:
+#     url: jdbc:postgresql://<RDSのエンドポイント>:5432/inventory
+#     username: postgres
+#     password: postgres
+#     driver-class-name: org.postgresql.Driver
+#   jpa:
+#     hibernate:
+#       ddl-auto: update
+#     properties:
+#       hibernate:
+#         dialect: org.hibernate.dialect.PostgreSQLDialect

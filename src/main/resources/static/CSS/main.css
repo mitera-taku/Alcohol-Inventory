@@ -63,7 +63,7 @@ button:active {
 
 th.sortable {
     cursor: pointer;
-    background-color: greenyellow;
+    background-color: floralwhite;
 }
 
 th.sortable.asc::after {
